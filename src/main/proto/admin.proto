@@ -7,7 +7,7 @@ option java_package = "com.retail.admin.protos.v1"; // This is the gold standard
 option java_outer_classname = "AdminUserProto";
 
 message AdminUser {
-  string id = 1;
+  string user_id = 1;
   string name = 2;
   string email = 3;
   bool is_active = 4;
