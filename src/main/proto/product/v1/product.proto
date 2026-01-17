@@ -5,7 +5,7 @@ package retail.products.v1;
 
 // 2. Consistent Java/Kotlin package naming
 option java_multiple_files = true;
-option java_package = "com.retail.products.protos.v1";
+option java_package = "com.apptorise.retail.admin.protos.v1";
 option java_outer_classname = "ProductProto";
 
 service ProductService {
