@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+// 1. Matches the proto-level namespacing
+package retail.products.v1;
+
+// 2. Consistent Java/Kotlin package naming
+option java_multiple_files = true;
+option java_package = "com.retail.products.protos.v1";
+option java_outer_classname = "ProductProto";
+
+service ProductService {
+  rpc CreateProduct (CreateProductRequest) returns (ProductResponse);
+}
+
+message CreateProductRequest {
+  string name = 1;
+  string sku = 2;
+  double purchase_price = 3;
+  double retail_price = 4;
+  int32 stock_quantity = 5;
+}
+
+message ProductResponse {
+  string product_id = 1; // Recommendation: Use string for IDs (UUIDs) across gRPC
+  string name = 2;
+  string sku = 3;
+  double retail_price = 4;
+  int32 stock_quantity = 5;
+}

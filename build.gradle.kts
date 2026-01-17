@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.github.leroyramaphoko"
-version = "1.0.3" // Bumping to 1.0.3 forces JitPack to rebuild
+version = "1.0.4" // Bumping to 1.0.3 forces JitPack to rebuild
 
 repositories {
     mavenCentral()
