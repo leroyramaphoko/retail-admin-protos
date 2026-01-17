@@ -1,11 +1,10 @@
 syntax = "proto3";
 
-package com.apptorise.retail.core.api;
+package retail.admin.v1;
 
-// Ensures separate Java files are generated for each message
 option java_multiple_files = true;
-// Sets the package for generated Java classes
-option java_package = "com.apptorise.retail.core.api.admin";
+option java_package = "com.retail.admin.protos.v1"; // This is the gold standard
+option java_outer_classname = "AdminUserProto";
 
 message AdminUser {
   string id = 1;
