@@ -1,27 +1,32 @@
 import com.google.protobuf.gradle.*
 
 plugins {
-    kotlin("jvm") version "2.2.21"
+    kotlin("jvm") version "2.0.21"
     `maven-publish`
     id("com.google.protobuf") version "0.9.4"
 }
 
 group = "com.github.leroyramaphoko"
-version = "1.0.4" // Bumping to 1.0.3 forces JitPack to rebuild
+version = "1.0.5"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // These must be 'api' so the retail-admin service inherits them
     api("com.google.protobuf:protobuf-kotlin:3.25.3")
     api("io.grpc:grpc-kotlin-stub:1.4.1")
     api("io.grpc:grpc-protobuf:1.62.2")
+    api("javax.annotation:javax.annotation-api:1.3.2")
 }
 
-kotlin { jvmToolchain(21) }
-java { withSourcesJar() }
+kotlin {
+    jvmToolchain(21)
+}
+
+java {
+    withSourcesJar()
+}
 
 protobuf {
     protoc { artifact = "com.google.protobuf:protoc:3.25.3" }
@@ -33,9 +38,11 @@ protobuf {
         all().forEach { task ->
             task.plugins {
                 id("grpc")
-                id("grpckt") // CREATES AdminServiceGrpcKt
+                id("grpckt")
             }
-            task.builtins { create("kotlin") }
+            task.builtins {
+                create("kotlin")
+            }
         }
     }
 }
