@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package com.apptorise.retail.core.api;
+
+// Ensures separate Java files are generated for each message
+option java_multiple_files = true;
+// Sets the package for generated Java classes
+option java_package = "com.apptorise.retail.core.api.admin";
+
+message AdminUser {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  bool is_active = 4;
+}
