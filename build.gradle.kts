@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.github.leroyramaphoko"
-version = "1.0.16"
+version = "1.0.17"
 
 repositories {
     mavenCentral()
@@ -22,6 +22,17 @@ dependencies {
 
 kotlin {
     jvmToolchain(21)
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs("build/generated/source/proto/main/java")
+            srcDirs("build/generated/source/proto/main/grpc")
+            srcDirs("build/generated/source/proto/main/grpckt")
+            srcDirs("build/generated/source/proto/main/kotlin")
+        }
+    }
 }
 
 java {
@@ -41,7 +52,7 @@ protobuf {
                 id("grpckt")
             }
             task.builtins {
-                create("kotlin")
+                id("kotlin")
             }
         }
     }
