@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.github.leroyramaphoko"
-version = "1.0.22" // incremented version
+version = "1.0.23" // incremented version
 
 repositories {
     mavenCentral()
@@ -29,14 +29,15 @@ kotlin {
 
 sourceSets {
     main {
-        java {
-            srcDirs(
-                "build/generated/source/proto/main/java",
-                "build/generated/source/proto/main/grpc",
-                "build/generated/source/proto/main/grpckt",
-                "build/generated/source/proto/main/kotlin"
-            )
-        }
+        // This is the crucial part: tell the Kotlin compiler where the generated code is
+        kotlin.srcDirs(
+            "build/generated/source/proto/main/grpckt",
+            "build/generated/source/proto/main/kotlin"
+        )
+        java.srcDirs(
+            "build/generated/source/proto/main/java",
+            "build/generated/source/proto/main/grpc"
+        )
     }
 }
 
