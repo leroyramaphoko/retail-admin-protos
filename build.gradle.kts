@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.github.leroyramaphoko"
-version = "1.0.26"
+version = "1.0.27"
 
 repositories {
     mavenCentral()
@@ -24,31 +24,15 @@ kotlin {
     jvmToolchain(21)
 }
 
-// 1. Define generated paths as variables for consistency
-val grpcJavaDir = "build/generated/source/proto/main/grpc"
-val grpcKotlinDir = "build/generated/source/proto/main/grpckt"
-val protoJavaDir = "build/generated/source/proto/main/java"
-val protoKotlinDir = "build/generated/source/proto/main/kotlin"
-
-sourceSets {
-    main {
-        // 2. Register these as source directories so the compiler finds them
-        java.srcDirs(protoJavaDir, grpcJavaDir)
-        kotlin.srcDirs(protoKotlinDir, grpcKotlinDir)
-    }
+java {
+    withSourcesJar()
 }
 
 protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:3.25.3"
-    }
+    protoc { artifact = "com.google.protobuf:protoc:3.25.3" }
     plugins {
-        id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:1.62.2"
-        }
-        id("grpckt") {
-            artifact = "io.grpc:protoc-gen-grpc-kotlin:1.4.1:jdk8@jar"
-        }
+        id("grpc") { artifact = "io.grpc:protoc-gen-grpc-java:1.62.2" }
+        id("grpckt") { artifact = "io.grpc:protoc-gen-grpc-kotlin:1.4.1:jdk8@jar" }
     }
     generateProtoTasks {
         all().forEach { task ->
@@ -57,21 +41,10 @@ protobuf {
                 id("grpckt")
             }
             task.builtins {
-                id("kotlin") {
-                    option("lite")
-                }
+                create("kotlin")
             }
         }
     }
-}
-
-// 3. Ensure generation happens before ANY compilation
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    dependsOn("generateProto")
-}
-
-java {
-    withSourcesJar()
 }
 
 publishing {
@@ -80,8 +53,5 @@ publishing {
             from(components["java"])
             artifactId = "retail-admin-protos"
         }
-    }
-    repositories {
-        mavenLocal()
     }
 }
