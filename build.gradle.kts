@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.github.leroyramaphoko"
-version = "1.0.24"
+version = "1.0.25"
 
 repositories {
     mavenCentral()
@@ -22,6 +22,20 @@ dependencies {
 
 kotlin {
     jvmToolchain(21)
+}
+
+// 1. Define generated paths as variables for consistency
+val grpcJavaDir = "build/generated/source/proto/main/grpc"
+val grpcKotlinDir = "build/generated/source/proto/main/grpckt"
+val protoJavaDir = "build/generated/source/proto/main/java"
+val protoKotlinDir = "build/generated/source/proto/main/kotlin"
+
+sourceSets {
+    main {
+        // 2. Register these as source directories so the compiler finds them
+        java.srcDirs(protoJavaDir, grpcJavaDir)
+        kotlin.srcDirs(protoKotlinDir, grpcKotlinDir)
+    }
 }
 
 protobuf {
@@ -51,30 +65,9 @@ protobuf {
     }
 }
 
-sourceSets {
-    main {
-        kotlin {
-            srcDirs(
-                "build/generated/source/proto/main/grpckt",
-                "build/generated/source/proto/main/kotlin"
-            )
-        }
-        java {
-            srcDirs(
-                "build/generated/source/proto/main/java",
-                "build/generated/source/proto/main/grpc"
-            )
-        }
-    }
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+// 3. Ensure generation happens before ANY compilation
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     dependsOn("generateProto")
-}
-
-tasks.withType<Jar> {
-    from(sourceSets.main.get().output)
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 java {
