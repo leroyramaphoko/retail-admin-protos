@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package retail.auth.v1;
 
-import "user.proto";
+import "user/v1/user.proto";
 
 option java_multiple_files = true;
 option java_package = "com.apptorise.retail.auth.v1";
