@@ -3,6 +3,7 @@ syntax = "proto3";
 package retail.stores.v1;
 
 import "google/protobuf/timestamp.proto";
+import "user/v1/user.proto";
 
 option java_multiple_files = true;
 option java_package = "com.apptorise.retail.admin.protos.v1";
@@ -10,14 +11,21 @@ option java_outer_classname = "StoreProto";
 
 service StoreService {
   rpc CreateStore (CreateStoreRequest) returns (StoreResponse);
-  rpc GetStore (GetStoreRequest) returns (StoreResponse);
+  rpc GetStore (GetStoreRequest) returns (StoreDetailResponse);
   rpc ListStores (ListStoresRequest) returns (ListStoresResponse);
   rpc DeleteStore (DeleteStoreRequest) returns (DeleteStoreResponse);
 }
 
-message Store {
+message StoreSummary {
   int64 id = 1;
   string name = 2;
+  retail.users.v1.UserSummary owner = 3;
+  bool is_active = 4;
+}
+
+message Store {
+  int64 id = 1;
+  StoreSummary summary = 2;
   string description = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp last_updated_at = 5;
@@ -33,13 +41,17 @@ message GetStoreRequest {
 }
 
 message StoreResponse {
+  StoreSummary store = 1;
+}
+
+message StoreDetailResponse {
   Store store = 1;
 }
 
 message ListStoresRequest {}
 
 message ListStoresResponse {
-  repeated Store stores = 1;
+  repeated StoreSummary stores = 1;
 }
 
 message DeleteStoreRequest {
