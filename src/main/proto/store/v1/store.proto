@@ -4,6 +4,7 @@ package retail.stores.v1;
 
 import "google/protobuf/timestamp.proto";
 import "user/v1/user.proto";
+import "common/v1/store_access_roles.proto";
 
 option java_multiple_files = true;
 option java_package = "com.apptorise.retail.admin.protos.v1";
@@ -14,6 +15,12 @@ service StoreService {
   rpc GetStore (GetStoreRequest) returns (StoreDetailResponse);
   rpc ListStores (ListStoresRequest) returns (ListStoresResponse);
   rpc DeleteStore (DeleteStoreRequest) returns (DeleteStoreResponse);
+
+  // Membership & Invitations
+  rpc InviteMember (InviteMemberRequest) returns (StoreInvitation);
+  rpc ListInvitations (ListInvitationsRequest) returns (ListInvitationsResponse);
+  rpc ListMembers (ListMembersRequest) returns (ListMembersResponse);
+  rpc RemoveMember (RemoveMemberRequest) returns (DeleteStoreResponse);
 }
 
 message StoreSummary {
@@ -23,6 +30,50 @@ message StoreSummary {
   retail.users.v1.UserSummary owner = 4;
   bool is_active = 5;
   string country_code = 6;
+}
+
+message StoreMember {
+  int64 id = 1;
+  int64 store_id = 2;
+  retail.users.v1.UserSummary user = 3;
+  retail.common.v1.StoreRole role = 4;
+  google.protobuf.Timestamp joined_at = 5;
+}
+
+message StoreInvitation {
+  int64 id = 1;
+  int64 store_id = 2;
+  string email = 3;
+  retail.common.v1.StoreRole role = 4;
+  string status = 5;
+  google.protobuf.Timestamp created_at = 6;
+}
+
+message InviteMemberRequest {
+  int64 store_id = 1;
+  string email = 2;
+  retail.common.v1.StoreRole role = 3;
+}
+
+message ListInvitationsRequest {
+  int64 store_id = 1;
+}
+
+message ListInvitationsResponse {
+  repeated StoreInvitation invitations = 1;
+}
+
+message ListMembersRequest {
+  int64 store_id = 1;
+}
+
+message ListMembersResponse {
+  repeated StoreMember members = 1;
+}
+
+message RemoveMemberRequest {
+  int64 store_id = 1;
+  int64 user_id = 2;
 }
 
 message Store {

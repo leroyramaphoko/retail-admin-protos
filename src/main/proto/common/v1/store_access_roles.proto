@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package retail.common.v1;
+
+option java_multiple_files = true;
+option java_package = "com.apptorise.retail.common.protos.v1";
+
+enum StoreRole {
+  STORE_ROLE_UNSPECIFIED = 0;
+  STORE_ROLE_OWNER = 1;
+  STORE_ROLE_MANAGER = 2;
+  STORE_ROLE_CLERK = 3;
+}
