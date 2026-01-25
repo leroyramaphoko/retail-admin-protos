@@ -16,7 +16,6 @@ service StoreService {
   rpc ListStores (ListStoresRequest) returns (ListStoresResponse);
   rpc DeleteStore (DeleteStoreRequest) returns (DeleteStoreResponse);
 
-  // Membership & Invitations
   rpc InviteMember (InviteMemberRequest) returns (StoreInvitation);
   rpc ListInvitations (ListInvitationsRequest) returns (ListInvitationsResponse);
   rpc ListMembers (ListMembersRequest) returns (ListMembersResponse);

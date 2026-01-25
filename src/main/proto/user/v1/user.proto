@@ -23,6 +23,11 @@ message UserSummary {
   string role = 6;
 }
 
+message StaffMember {
+  string employee_id = 1;
+  string department = 2;
+}
+
 message User {
   string id = 1;
   UserSummary summary = 2;
@@ -31,6 +36,10 @@ message User {
   string created_at = 5;
   string last_login_at = 6;
   bool is_active = 7;
+
+  oneof account_details {
+    StaffMember staff = 8;
+  }
 }
 
 message CreateUserRequest {
@@ -38,6 +47,7 @@ message CreateUserRequest {
   string last_name = 2;
   string email = 3;
   string role = 4;
+  string department = 5;
 }
 
 message GetUserRequest {
@@ -68,6 +78,7 @@ message UpdateUserRequest {
   string last_name = 3;
   string phone_number = 4;
   string address = 5;
+  string department = 6;
 }
 
 message DeleteUserRequest {
