@@ -22,6 +22,7 @@ message StoreSummary {
   string merchant_id = 3;
   retail.users.v1.UserSummary owner = 4;
   bool is_active = 5;
+  string country_code = 6;
 }
 
 message Store {
