@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package retail.notifications.v1;
+
+import "google/protobuf/empty.proto";
+
+option java_multiple_files = true;
+option java_package = "com.apptorise.retail.admin.protos.v1";
+option java_outer_classname = "NotificationProto";
+
+service NotificationService {
+  rpc RegisterDeviceToken (RegisterDeviceTokenRequest) returns (google.protobuf.Empty);
+  rpc UnregisterDeviceToken (UnregisterDeviceTokenRequest) returns (google.protobuf.Empty);
+}
+
+message RegisterDeviceTokenRequest {
+  int64 user_id = 1;
+  string token = 2;
+  // Platform removed from here, pulled from headers instead
+}
+
+message UnregisterDeviceTokenRequest {
+  string token = 1;
+}
