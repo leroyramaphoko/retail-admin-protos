@@ -14,9 +14,7 @@ service NotificationService {
 }
 
 message RegisterDeviceTokenRequest {
-  int64 user_id = 1;
-  string token = 2;
-  // Platform removed from here, pulled from headers instead
+  string token = 1;
 }
 
 message UnregisterDeviceTokenRequest {
