@@ -4,7 +4,7 @@ package retail.stores.v1;
 
 import "google/protobuf/timestamp.proto";
 import "user/v1/user.proto";
-import "common/v1/store_access_roles.proto";
+import "common/v1/store_roles.proto";
 
 option java_multiple_files = true;
 option java_package = "com.apptorise.retail.admin.protos.v1";

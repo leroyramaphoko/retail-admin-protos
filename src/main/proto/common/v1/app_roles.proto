@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package retail.common.v1;
+
+option java_multiple_files = true;
+option java_package = "com.apptorise.retail.common.protos.v1";
+enum AppRole {
+  APP_ROLE_UNSPECIFIED = 0;
+  APP_ROLE_USER = 1;         // Standard person using the app
+  APP_ROLE_SYSTEM_ADMIN = 2; // Can see everything, manage all stores
+  APP_ROLE_SUPPORT = 3;      // Limited global access for help desk
+}
