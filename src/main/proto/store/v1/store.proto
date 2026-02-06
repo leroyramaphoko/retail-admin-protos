@@ -11,7 +11,8 @@ option java_package = "com.apptorise.retail.admin.protos.v1";
 option java_outer_classname = "StoreProto";
 
 service StoreService {
-  rpc CreateStore (CreateStoreRequest) returns (StoreResponse);
+  rpc CreateStore (stream CreateStoreRequest) returns (StoreResponse);
+
   rpc GetStore (GetStoreRequest) returns (StoreDetailResponse);
   rpc ListStores (ListStoresRequest) returns (ListStoresResponse);
   rpc DeleteStore (DeleteStoreRequest) returns (DeleteStoreResponse);
@@ -23,9 +24,20 @@ service StoreService {
   rpc ListMembers (ListMembersRequest) returns (ListMembersResponse);
   rpc RemoveMember (RemoveMemberRequest) returns (DeleteStoreResponse);
 
-  // Invitee Actions
   rpc ListMyInvitations (ListMyInvitationsRequest) returns (ListInvitationsResponse);
   rpc RespondToInvitation (RespondToInvitationRequest) returns (RespondToInvitationResponse);
+}
+
+message CreateStoreRequest {
+  oneof data {
+    StoreMetadata metadata = 1;
+    bytes image_chunk = 2;
+  }
+}
+
+message StoreMetadata {
+  string name = 1;
+  string description = 2;
 }
 
 message StoreSummary {
@@ -35,6 +47,7 @@ message StoreSummary {
   retail.users.v1.UserSummary owner = 4;
   bool is_active = 5;
   string country_code = 6;
+  string image_url = 7;
 }
 
 message StoreMember {
@@ -115,11 +128,6 @@ message Store {
   string description = 3;
   google.protobuf.Timestamp created_at = 4;
   google.protobuf.Timestamp last_updated_at = 5;
-}
-
-message CreateStoreRequest {
-  string name = 1;
-  string description = 2;
 }
 
 message GetStoreRequest {
