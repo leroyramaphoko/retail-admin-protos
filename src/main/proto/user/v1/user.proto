@@ -51,6 +51,7 @@ message CreateUserRequest {
   string email = 3;
   string role = 4;
   string department = 5;
+  optional string avatar_url = 6;
 }
 
 message GetUserRequest {
