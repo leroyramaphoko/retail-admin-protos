@@ -8,6 +8,7 @@ option java_outer_classname = "ProductProto";
 
 service ProductService {
   rpc CreateProduct (CreateProductRequest) returns (ProductResponse);
+  rpc GenerateProductContent (GenerateProductContentRequest) returns (GenerateProductContentResponse);
 }
 
 message CreateProductRequest {
@@ -16,6 +17,8 @@ message CreateProductRequest {
   double purchase_price = 3;
   double retail_price = 4;
   int32 stock_quantity = 5;
+  string description = 6;
+  repeated string image_uris = 7;
 }
 
 message ProductResponse {
@@ -24,4 +27,16 @@ message ProductResponse {
   string sku = 3;
   double retail_price = 4;
   int32 stock_quantity = 5;
+}
+
+message GenerateProductContentRequest {
+  repeated bytes images = 1;
+  repeated string existing_image_uris = 2;
+  string refinement_instructions = 3;
+}
+
+message GenerateProductContentResponse {
+  string name = 1;
+  string description = 2;
+  repeated string temporary_image_uris = 3;
 }
